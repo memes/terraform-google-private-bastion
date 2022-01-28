@@ -1,0 +1,4 @@
+# TODO: @memes - update as necessary and rename to .tool-versions
+python 3.10.0
+# ruby 2.7.2
+terraform 1.0.10
