@@ -35,7 +35,6 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: |
-            memes/forward-proxy
             ghcr.io/${{ github.repository }}/forward-proxy
           tags: |
             type=semver,pattern={{version}}
