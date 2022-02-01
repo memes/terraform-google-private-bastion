@@ -41,8 +41,10 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
           labels: |
             maintainer=memes@matthewemes.com
-            org.opencontainers.image.title=private-bastion-forward-proxy
+            org.opencontainers.image.title=forward-proxy
             org.opencontainers.image.description=Forward-proxy container for use in private bastion
+            org.opencontainers.image.url=https://github.com/${{ github.repository }}/tree/${{ github.sha }}/containers/forward-proxy/
+            org.opencontainers.image.documentation=https://github.com/${{ github.repository }}/tree/${{ github.sha }}/containers/forward-proxy/README.md
       - uses: docker/build-push-action@v2
         with:
           context: ./containers/forward-proxy
