@@ -36,10 +36,14 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
+          labels: |
+            maintainer=memes@matthewemes.com
+            org.opencontainers.image.title=private-bastion-forward-proxy
+            org.opencontainers.image.description=Forward-proxy container for use in private bastion
       - uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./private-bastion-forward-proxy/Dockerfile
+          context: ./private-bastion-forward-proxy
+          file: Dockerfile
           push: ${{ startsWith(github.ref, 'refs/tags/') }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
