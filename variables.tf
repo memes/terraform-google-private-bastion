@@ -95,11 +95,10 @@ EOD
 
 variable "proxy_container_image" {
   type        = string
-  default     = "memes/private-bastion-forward-proxy:latest"
   description = <<-EOD
-The qualified container image to use as a forward-proxy through this bastion. The
-default value will attempt to pull 'memes/private-bastion-forward-proxy' from
-Docker Hub.
+The qualified container image to use as a forward-proxy through this bastion.
+You must supply this value with a valid private Artifact or Container Respository
+identifier, or a public repo identifier.
 EOD
 }
 
