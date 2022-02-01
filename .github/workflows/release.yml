@@ -47,7 +47,7 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           context: ./private-bastion-forward-proxy
-          file: Dockerfile
+          file: ./private-bastion-forward-proxy/Dockerfile
           push: ${{ startsWith(github.ref, 'refs/tags/') }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
