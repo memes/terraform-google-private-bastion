@@ -1,0 +1,4 @@
+# Ignore everything except tinyproxy configuration
+*
+.*
+!tinyproxy.conf

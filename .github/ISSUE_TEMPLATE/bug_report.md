@@ -27,7 +27,7 @@ Any other details we need to know?
 
 ## Reproducing the issue
 
-How can we reproduce this behavior? Which version of F5's product was used?
+How can we reproduce this behavior?
 
 ## Additional context
 

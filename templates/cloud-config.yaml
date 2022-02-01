@@ -1,0 +1,36 @@
+#cloud-config
+# Launches a forward-proxy container from a (private) repo on boot.
+# yamllint disable rule:comments rule:line-length
+---
+write_files:
+  - path: /etc/systemd/system/forward-proxy.service
+    permissions: '0644'
+    owner: root
+    content: |
+      [Unit]
+      Description=Launch a forward-proxy in a container
+      After=network-online.target
+      FailureAction=none
+      StartLimitIntervalSec=10
+      StartLimitBurst=5
+
+      [Service]
+      Type=simple
+      Environment="HOME=/var/run/forward-proxy"
+      # yamllint disable
+%{if length(docker_credential_registries) > 0 ~}
+      ExecStartPre=/usr/bin/docker-credential-gcr configure-docker --registries=${join(",", docker_credential_registries)}
+%{ endif ~}
+      # yamllint enable
+      ExecStart=/usr/bin/docker run --rm --publish 8888:8888 --name forward-proxy ${proxy_container_image}
+      ExecStop=/usr/bin/docker stop forward-proxy
+      ExecStopPost=/usr/bin/docker rm forward-proxy
+      RestartSec=1
+      Restart=on-failure
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - systemctl daemon-reload
+  - systemctl enable --now forward-proxy

@@ -1,7 +1,13 @@
-# Ignore my direnv setup
-.envrc
+# Ignore asdf/direnv/bundle setup
+.bundle
 .direnv
+.envrc
 .tool-versions
+Gemfile.lock
 
-# Ignore generated binaries in dist
-dist/
+# Ignore Terraform state and lock files, along with any auto vars
+.terraform
+.terraform.lock.hcl
+terraform.tfstate*
+*.auto.tfvars*
+terraform.tfvars*
