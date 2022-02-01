@@ -36,7 +36,7 @@ jobs:
         with:
           images: |
             memes/private-bastion-forward-proxy
-            ghcr.io/${{ github.repository }}
+            ghcr.io/${{ github.repository }}/private-bastion-forward-proxy
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
