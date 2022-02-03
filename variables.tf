@@ -4,11 +4,11 @@ variable "prefix" {
     # This value drives multiple derivative resource names and id's; the maximum
     # length permitted is limited by service account to 30 chars.
     condition     = can(regex("^[a-z](?:[a-z0-9-]{4,28}[a-z0-9])$", var.prefix))
-    error_message = "The prefix variable must be RFC1035 compliant and between 5 and 29 characters in length."
+    error_message = "The prefix variable must be RFC1035 compliant and between 5 and 30 characters in length."
   }
   description = <<-EOD
 The prefix to use when naming resources managed by this module. Must be RFC1035
-compliant and between 5 and 29 characters in length, inclusive.
+compliant and between 5 and 30 characters in length, inclusive.
 EOD
 }
 
@@ -124,5 +124,59 @@ the default priority (1000).
 
 Leave this variable at the default empty value to manage firewall rules outside
 this module.
+EOD
+}
+
+variable "additional_ports" {
+  type = list(number)
+  validation {
+    condition     = length(join("", [for port in var.additional_ports : port > 0 && port < 65536 && port == floor(port) ? "x" : ""])) == length(var.additional_ports)
+    error_message = "Each additional_port must be an integer between 1 and 65535 inclusive."
+  }
+  default = [
+    8888,
+  ]
+  description = <<-EOD
+A list of additional TCP ports that will be allowed to receive IAP tunneled
+traffic. Default is [8888] to allow for forward-proxy use-case.
+EOD
+}
+
+variable "disk_size_gb" {
+  type = number
+  validation {
+    condition     = tonumber(coalesce(var.disk_size_gb, "20")) >= 20
+    error_message = "The disk_size_gb value must be empty or >= 20."
+  }
+  default     = 20
+  description = <<-EOD
+The size of the bastion boot disk in GB. Default is 20.
+EOD
+}
+
+variable "machine_type" {
+  type        = string
+  default     = "e2-medium"
+  description = <<-EOD
+The Compute Engine machine type to use for bastion. Default is 'e2-medium'.
+EOD
+}
+
+variable "members" {
+  type        = list(string)
+  default     = []
+  description = <<-EOD
+An optional list of user/group/serviceAccount emails that will be added as IAP
+members for *this* bastion. Default is empty.
+EOD
+}
+
+variable "service_account_roles_supplemental" {
+  type        = list(string)
+  default     = []
+  description = <<-EOD
+An optional list of roles that will be assigned to the generated bastion service
+account in addition to the standard logging, metrics, and OS Login roles. Default
+is an empty list.
 EOD
 }

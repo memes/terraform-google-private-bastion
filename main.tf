@@ -37,18 +37,16 @@ module "bastion" {
   name                       = local.bastion_name
   name_prefix                = local.bastion_name
   fw_name_allow_ssh_from_iap = format("%s-allow-iap-bastion", var.prefix)
-  additional_ports = [
-    8888,
-  ]
-  project       = var.project_id
-  network       = data.google_compute_subnetwork.subnet.network
-  subnet        = data.google_compute_subnetwork.subnet.self_link
-  zone          = var.zone
-  image_family  = var.image.family
-  image_project = var.image.project_id
-  labels        = local.labels
-  tags          = local.tags
-  ephemeral_ip  = var.ephemeral_ip
+  additional_ports           = var.additional_ports
+  project                    = var.project_id
+  network                    = data.google_compute_subnetwork.subnet.network
+  subnet                     = data.google_compute_subnetwork.subnet.self_link
+  zone                       = var.zone
+  image_family               = var.image.family
+  image_project              = var.image.project_id
+  labels                     = local.labels
+  tags                       = local.tags
+  ephemeral_ip               = var.ephemeral_ip
   metadata = {
     user-data = templatefile("${path.module}/templates/cloud-config.yaml", {
       docker_credential_registries = distinct(concat(
@@ -58,6 +56,10 @@ module "bastion" {
       proxy_container_image = var.proxy_container_image
     })
   }
+  disk_size_gb                       = var.disk_size_gb
+  machine_type                       = var.machine_type
+  members                            = var.members
+  service_account_roles_supplemental = var.service_account_roles_supplemental
 }
 
 # Allow the bastion to access packages from container registry
