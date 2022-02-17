@@ -80,7 +80,7 @@ variable "labels" {
   default     = {}
   description = <<-EOD
 An optional map of labels to apply to resources created by this module, in addition
-to thos always set. Default is empty.
+to those always set. Default is empty.
 EOD
 }
 
@@ -97,7 +97,7 @@ variable "proxy_container_image" {
   type        = string
   description = <<-EOD
 The qualified container image to use as a forward-proxy through this bastion.
-You must supply this value with a valid private Artifact or Container Respository
+You must supply this value with a valid private Artifact or Container Repository
 identifier, or a public repo identifier.
 EOD
 }
@@ -117,7 +117,7 @@ variable "bastion_targets" {
   }
   description = <<-EOD
 An optional set of firewall targets that will be used to create GCP Firewall Rules
-that allow the targets to receive *ALL* ingress traffic from the bastion instance.
+that allow the targets to receive _ALL_ ingress traffic from the bastion instance.
 Targets are specified as a list of service account emails, destination CIDRs, and
 target network tags. If a priority is unspecified, the rules will be created at
 the default priority (1000).
@@ -167,7 +167,7 @@ variable "members" {
   default     = []
   description = <<-EOD
 An optional list of user/group/serviceAccount emails that will be added as IAP
-members for *this* bastion. Default is empty.
+members for _this_ bastion. Default is empty.
 EOD
 }
 
