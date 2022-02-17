@@ -8,18 +8,15 @@ steps:
       - build
       - --file
       - Dockerfile
-      - --build-arg
-      - "COMMIT_SHA=${COMMIT_SHA}"
-      - --build-arg
-      - "TAG_NAME=${TAG_NAME}"
       - --tag
       - "${_CONTAINER_REPO}/forward-proxy:latest"
       - --tag
       - "${_CONTAINER_REPO}/forward-proxy:${TAG_NAME}"
       - .
-    dir: containers/forward-proxy
+    dir: $_WORKING_DIR
 images:
   - ${_CONTAINER_REPO}/forward-proxy:latest
   - ${_CONTAINER_REPO}/forward-proxy:${TAG_NAME}
 substitutions:
   _CONTAINER_REPO: ''
+  _WORKING_DIR: ''
