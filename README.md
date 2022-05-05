@@ -170,7 +170,7 @@ as you have authenticated to the target repository.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bastion"></a> [bastion](#module\_bastion) | terraform-google-modules/bastion-host/google | 4.1.0 |
+| <a name="module_bastion"></a> [bastion](#module\_bastion) | terraform-google-modules/bastion-host/google | 5.0.0 |
 
 ## Resources
 
@@ -195,7 +195,7 @@ as you have authenticated to the target repository.
 | <a name="input_additional_ports"></a> [additional\_ports](#input\_additional\_ports) | A list of additional TCP ports that will be allowed to receive IAP tunneled<br>traffic. Default is [8888] to allow for forward-proxy use-case. | `list(number)` | <pre>[<br>  8888<br>]</pre> | no |
 | <a name="input_bastion_targets"></a> [bastion\_targets](#input\_bastion\_targets) | An optional set of firewall targets that will be used to create GCP Firewall Rules<br>that allow the targets to receive _ALL_ ingress traffic from the bastion instance.<br>Targets are specified as a list of service account emails, destination CIDRs, and<br>target network tags. If a priority is unspecified, the rules will be created at<br>the default priority (1000).<br><br>Leave this variable at the default empty value to manage firewall rules outside<br>this module. | <pre>object({<br>    service_accounts = list(string)<br>    cidrs            = list(string)<br>    tags             = list(string)<br>    priority         = number<br>  })</pre> | <pre>{<br>  "cidrs": null,<br>  "priority": null,<br>  "service_accounts": null,<br>  "tags": null<br>}</pre> | no |
 | <a name="input_disk_size_gb"></a> [disk\_size\_gb](#input\_disk\_size\_gb) | The size of the bastion boot disk in GB. Default is 20. | `number` | `20` | no |
-| <a name="input_ephemeral_ip"></a> [ephemeral\_ip](#input\_ephemeral\_ip) | Boolean flag to toggle provisioning of an ephemeral public IP on the bastion<br>instance; default is false. | `bool` | `false` | no |
+| <a name="input_external_ip"></a> [external\_ip](#input\_external\_ip) | Boolean flag to toggle provisioning of an ephemeral public IP on the bastion<br>instance; default is false. | `bool` | `false` | no |
 | <a name="input_image"></a> [image](#input\_image) | Specifies the image family and project id to use for bastion. Default will launch<br>the latest stable COS image with Confidential VM support. | <pre>object({<br>    family     = string<br>    project_id = string<br>  })</pre> | <pre>{<br>  "family": "cos-stable",<br>  "project_id": "confidential-vm-images"<br>}</pre> | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | An optional map of labels to apply to resources created by this module, in addition<br>to those always set. Default is empty. | `map(string)` | `{}` | no |
 | <a name="input_machine_type"></a> [machine\_type](#input\_machine\_type) | The Compute Engine machine type to use for bastion. Default is 'e2-medium'. | `string` | `"e2-medium"` | no |

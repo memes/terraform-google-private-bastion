@@ -66,7 +66,7 @@ the latest stable COS image with Confidential VM support.
 EOD
 }
 
-variable "ephemeral_ip" {
+variable "external_ip" {
   type        = bool
   default     = false
   description = <<-EOD
