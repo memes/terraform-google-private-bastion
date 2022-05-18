@@ -207,6 +207,7 @@ as you have authenticated to the target repository.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | The private IP address of the bastion instance. |
 | <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | A gcloud command that will SSH via IAP to bastion host. |
 | <a name="output_tunnel_command"></a> [tunnel\_command](#output\_tunnel\_command) | A gcloud command that create a tunnel between localhost:8888 via IAP to bastion<br>host; connections to localhost:8888 will be tunneled to bastion forward-proxy. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

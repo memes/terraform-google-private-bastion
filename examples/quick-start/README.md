@@ -128,7 +128,7 @@ external traffic through the NAT then a pull from Docker Hub or GHCR will work.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bastion"></a> [bastion](#module\_bastion) | memes/private-bastion/google | 2.0.0 |
+| <a name="module_bastion"></a> [bastion](#module\_bastion) | memes/private-bastion/google | 2.0.1 |
 
 ## Resources
 
@@ -152,6 +152,7 @@ No resources.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | The private IP address of the bastion instance. |
 | <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | A gcloud command that will SSH via IAP to bastion host. |
 | <a name="output_tunnel_command"></a> [tunnel\_command](#output\_tunnel\_command) | A gcloud command that create a tunnel between localhost:8888 via IAP to bastion<br>host; connections to localhost:8888 will be tunneled to bastion forward-proxy. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
