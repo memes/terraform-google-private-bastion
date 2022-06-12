@@ -15,7 +15,7 @@ provider "google" {
 
 module "bastion" {
   source                = "memes/private-bastion/google"
-  version               = "2.0.1"
+  version               = "2.0.2"
   proxy_container_image = var.proxy_container_image
   prefix                = var.prefix
   project_id            = var.project_id

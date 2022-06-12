@@ -19,3 +19,10 @@ output "ip_address" {
 The private IP address of the bastion instance.
 EOD
 }
+
+output "self_link" {
+  value       = module.bastion.self_link
+  description = <<-EOD
+The self-link of the bastion instance.
+EOD
+}
