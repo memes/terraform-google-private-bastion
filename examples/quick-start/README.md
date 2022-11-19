@@ -99,7 +99,7 @@ module "bastion" {
     source                = "memes/private-bastion/google"
     version               = "1.0.0"
     ephemeral_ip          = true
-    proxy_container_image = "ghcr.io/memes/terraform-google-private-bastion/forward-proxy:v1.0.0"
+    proxy_container_image = "ghcr.io/memes/terraform-google-private-bastion/forward-proxy:v2.1.0"
     # Other fields remain the same
     prefix                = var.prefix
     project_id            = var.project_id
@@ -128,7 +128,7 @@ external traffic through the NAT then a pull from Docker Hub or GHCR will work.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bastion"></a> [bastion](#module\_bastion) | memes/private-bastion/google | 2.0.2 |
+| <a name="module_bastion"></a> [bastion](#module\_bastion) | memes/private-bastion/google | 2.1.0 |
 
 ## Resources
 

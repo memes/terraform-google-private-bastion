@@ -1,6 +1,6 @@
 # Forward-proxy container
 
-The forward-proxy container is built on Alpine 3.15 and uses `tinyproxy` as an
+The forward-proxy container is built on Alpine 3.16 and uses `tinyproxy` as an
 HTTP and HTTPS proxy. When the container is deployed to a GCP VM, HTTP/S traffic
 can be proxied through an IAP tunnel to the container host, and then on to any
 GCP resource that the VM is permitted to reach.
