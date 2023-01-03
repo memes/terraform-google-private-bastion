@@ -133,12 +133,11 @@ variable "additional_ports" {
     condition     = length(join("", [for port in var.additional_ports : port > 0 && port < 65536 && port == floor(port) ? "x" : ""])) == length(var.additional_ports)
     error_message = "Each additional_port must be an integer between 1 and 65535 inclusive."
   }
-  default = [
-    8888,
-  ]
+  default     = []
   description = <<-EOD
 A list of additional TCP ports that will be allowed to receive IAP tunneled
-traffic. Default is [8888] to allow for forward-proxy use-case.
+traffic, in addition to the forward-proxy listener port (see `remote_port`).
+Default is an empty list.
 EOD
 }
 
@@ -178,5 +177,32 @@ variable "service_account_roles_supplemental" {
 An optional list of roles that will be assigned to the generated bastion service
 account in addition to the standard logging, metrics, and OS Login roles. Default
 is an empty list.
+EOD
+}
+
+variable "remote_port" {
+  type = number
+  validation {
+    condition     = var.remote_port > 0 && var.remote_port < 65536 && var.remote_port == floor(var.remote_port)
+    error_message = "The remote_port value must be an integer between 1 and 65535 inclusive."
+  }
+  default     = 8888
+  description = <<-EOD
+The remote TCP port that the forward-proxy container will be listening on.
+Default value is 8888.
+EOD
+}
+
+variable "local_port" {
+  type = number
+  validation {
+    condition     = var.local_port > 0 && var.local_port < 65536 && var.local_port == floor(var.local_port)
+    error_message = "The local_port value must be an integer between 1 and 65535 inclusive."
+  }
+  default     = 8888
+  description = <<-EOD
+The local TCP port that will be embedded in the IAP tunnel command output. This
+is the value to which HTTP/HTTPS proxies should use; e.g. HTTP_PROXY=http://localhost:LOCAL_PORT,
+where LOCAL_PORT is the value of `local_port` variable. Default value is 8888.
 EOD
 }

@@ -8,8 +8,9 @@ EOD
 output "tunnel_command" {
   value       = module.bastion.tunnel_command
   description = <<-EOD
-A gcloud command that create a tunnel between localhost:8888 via IAP to bastion
-host; connections to localhost:8888 will be tunneled to bastion forward-proxy.
+A gcloud command that create a tunnel between localhost and bastion via IAP;
+connections to localhost:PORT will be tunneled to bastion forward-proxy. The value
+of PORT will be taken from `local_port` input variable, with 8888 as the default.
 EOD
 }
 

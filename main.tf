@@ -37,7 +37,7 @@ module "bastion" {
   name                       = local.bastion_name
   name_prefix                = local.bastion_name
   fw_name_allow_ssh_from_iap = format("%s-allow-iap-bastion", var.prefix)
-  additional_ports           = var.additional_ports
+  additional_ports           = concat([var.remote_port], var.additional_ports)
   project                    = var.project_id
   network                    = data.google_compute_subnetwork.subnet.network
   subnet                     = data.google_compute_subnetwork.subnet.self_link
@@ -54,6 +54,7 @@ module "bastion" {
         [for repo in local.ar_repos : format("%s-docker.pkg.dev", repo.location)]
       ))
       proxy_container_image = var.proxy_container_image
+      proxy_port            = var.remote_port
     })
   }
   disk_size_gb                       = var.disk_size_gb

@@ -19,7 +19,7 @@ write_files:
 %{if length(docker_credential_registries) > 0 ~}
       ExecStartPre=/usr/bin/docker-credential-gcr configure-docker --registries=${join(",", docker_credential_registries)}
 %{ endif ~}
-      ExecStart=/usr/bin/docker run --rm --publish 8888:8888 --name forward-proxy ${proxy_container_image}
+      ExecStart=/usr/bin/docker run --rm --publish ${proxy_port}:8888/tcp --name forward-proxy ${proxy_container_image}
       ExecStop=/usr/bin/docker stop forward-proxy
       ExecStopPost=/usr/bin/docker rm forward-proxy
       RestartSec=1
