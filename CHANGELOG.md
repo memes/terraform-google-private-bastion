@@ -7,6 +7,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1] - 2023-01-02
+
+### Added
+
+### Changed
+
+- Updated `forward-proxy` container to use Alpine 3.17.0, and Tinyproxy 1.11.1-r2
+
+### Removed
+
 ## [2.2.0] - 2023-01-02
 
 ### Added
@@ -18,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   that defines a `gcloud` operation to start an IAP tunnel that forwards connections
   made to localhost:local_port through the tunnel. Default value is 8888 for
   backward compatibility.
+
+### Changed
+
+### Removed
 
 ## [2.1.0] - 2022-11-19
 
@@ -76,6 +90,7 @@ Initial public release of module.
 
 ### Removed
 
+[2.2.1]: https://github.com/memes/terraform-google-private-bastion/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/memes/terraform-google-private-bastion/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/memes/terraform-google-private-bastion/compare/v2.0.2...v2.1.0
 [2.0.2]: https://github.com/memes/terraform-google-private-bastion/compare/v2.0.1...v2.0.2
