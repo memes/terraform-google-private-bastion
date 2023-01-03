@@ -128,7 +128,7 @@ external traffic through the NAT then a pull from Docker Hub or GHCR will work.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bastion"></a> [bastion](#module\_bastion) | memes/private-bastion/google | 2.2.0 |
+| <a name="module_bastion"></a> [bastion](#module\_bastion) | memes/private-bastion/google | 2.2.1 |
 
 ## Resources
 
