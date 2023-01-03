@@ -7,6 +7,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2023-01-02
+
+### Added
+
+- `remote_port` allows consumers to override the remote IAP tunnel endpoint exposed
+  by the `forward-proxy` container on the bastion. Default value is 8888 for
+  backward compatibility.
+- `local_port` can be used to influence the generated output value `tunnel_command`
+  that defines a `gcloud` operation to start an IAP tunnel that forwards connections
+  made to localhost:local_port through the tunnel. Default value is 8888 for
+  backward compatibility.
+
 ## [2.1.0] - 2022-11-19
 
 ### Added
@@ -64,6 +76,7 @@ Initial public release of module.
 
 ### Removed
 
+[2.2.0]: https://github.com/memes/terraform-google-private-bastion/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/memes/terraform-google-private-bastion/compare/v2.0.2...v2.1.0
 [2.0.2]: https://github.com/memes/terraform-google-private-bastion/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/memes/terraform-google-private-bastion/compare/v2.0.0...v2.0.1

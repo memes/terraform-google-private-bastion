@@ -6,10 +6,11 @@ EOD
 }
 
 output "tunnel_command" {
-  value       = format("gcloud compute start-iap-tunnel %s 8888 --local-host-port localhost:8888 --project=%s --zone=%s", module.bastion.hostname, var.project_id, var.zone)
+  value       = format("gcloud compute start-iap-tunnel %s %d --local-host-port localhost:%d --project=%s --zone=%s", module.bastion.hostname, var.remote_port, var.local_port, var.project_id, var.zone)
   description = <<-EOD
-A gcloud command that create a tunnel between localhost:8888 via IAP to bastion
-host; connections to localhost:8888 will be tunneled to bastion forward-proxy.
+A gcloud command that create a tunnel between localhost and bastion via IAP;
+connections to localhost:PORT will be tunneled to bastion forward-proxy. The value
+of PORT will be taken from `local_port` variable, with 8888 as the default.
 EOD
 }
 
