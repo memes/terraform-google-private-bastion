@@ -63,6 +63,6 @@ jobs:
         with:
           context: ./containers/forward-proxy
           file: ./containers/forward-proxy/Dockerfile
-          push: ${{ startsWith(github.ref, 'refs/tags/') }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
