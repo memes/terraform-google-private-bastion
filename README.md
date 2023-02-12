@@ -1,5 +1,9 @@
 # Private Bastion Terraform module for Google Cloud
 
+![GitHub release](https://img.shields.io/github/v/release/memes/terraform-google-private-bastion?sort=semver)
+![Maintenance](https://img.shields.io/maintenance/yes/2023)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
+
 This module implements a wrapper around Google's published bastion module that
 allows it to function correctly when deployed in a private VPC without public
 internet access, by pulling a container image containing a forward-proxy from a
