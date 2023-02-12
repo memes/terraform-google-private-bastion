@@ -174,7 +174,7 @@ as you have authenticated to the target repository.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bastion"></a> [bastion](#module\_bastion) | terraform-google-modules/bastion-host/google | 5.1.0 |
+| <a name="module_bastion"></a> [bastion](#module\_bastion) | terraform-google-modules/bastion-host/google | 5.2.0 |
 
 ## Resources
 
