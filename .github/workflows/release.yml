@@ -50,8 +50,8 @@ jobs:
             memes/forward-proxy
             ghcr.io/${{ github.repository }}/forward-proxy
           tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}},value=${{ steps.release_please.outputs.tag_name }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ steps.release_please.outputs.tag_name }}
           labels: |
             maintainer=memes@matthewemes.com
             org.opencontainers.image.title=forward-proxy
