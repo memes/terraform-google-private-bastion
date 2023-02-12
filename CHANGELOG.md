@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0](https://github.com/memes/terraform-google-private-bastion/compare/v2.2.1...v2.3.0) (2023-02-12)
+
+
+### Features
+
+* Add badges and Contributor Covenant ([db6ad72](https://github.com/memes/terraform-google-private-bastion/commit/db6ad72fad5c783d940b639166cf8ef8c68154e6))
+
 ## [2.2.1] - 2023-01-02
 
 ### Added
