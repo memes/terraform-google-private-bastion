@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.4](https://github.com/memes/terraform-google-private-bastion/compare/v2.3.3...v2.3.4) (2023-04-07)
+
+
+### Bug Fixes
+
+* Add public IP address output ([80aa8a7](https://github.com/memes/terraform-google-private-bastion/commit/80aa8a747740261cb48534fd6f6441c64af4813c)), closes [#57](https://github.com/memes/terraform-google-private-bastion/issues/57)
+
 ## [2.3.3](https://github.com/memes/terraform-google-private-bastion/compare/v2.3.2...v2.3.3) (2023-02-12)
 
 
