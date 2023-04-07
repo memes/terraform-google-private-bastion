@@ -27,3 +27,12 @@ output "self_link" {
 The self-link of the bastion instance.
 EOD
 }
+
+data "google_compute_instance" "bastion" {
+  count     = var.external_ip ? 1 : 0
+  self_link = module.bastion.self_link
+}
+
+output "public_ip_address" {
+  value = try(data.google_compute_instance.bastion[0].network_interface[0].access_config[0].nat_ip, "")
+}
