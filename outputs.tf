@@ -34,5 +34,15 @@ data "google_compute_instance" "bastion" {
 }
 
 output "public_ip_address" {
-  value = try(data.google_compute_instance.bastion[0].network_interface[0].access_config[0].nat_ip, "")
+  value       = try(data.google_compute_instance.bastion[0].network_interface[0].access_config[0].nat_ip, "")
+  description = <<-EOD
+The public IP address of the bastion, if applicable.
+EOD
+}
+
+output "service_account" {
+  value       = module.bastion.service_account
+  description = <<-EOD
+The service account created for the bastion.
+EOD
 }

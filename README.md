@@ -215,8 +215,9 @@ as you have authenticated to the target repository.
 | Name | Description |
 |------|-------------|
 | <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | The private IP address of the bastion instance. |
-| <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | n/a |
+| <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | The public IP address of the bastion, if applicable. |
 | <a name="output_self_link"></a> [self\_link](#output\_self\_link) | The self-link of the bastion instance. |
+| <a name="output_service_account"></a> [service\_account](#output\_service\_account) | The service account created for the bastion. |
 | <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | A gcloud command that will SSH via IAP to bastion host. |
 | <a name="output_tunnel_command"></a> [tunnel\_command](#output\_tunnel\_command) | A gcloud command that create a tunnel between localhost and bastion via IAP;<br>connections to localhost:PORT will be tunneled to bastion forward-proxy. The value<br>of PORT will be taken from `local_port` variable, with 8888 as the default. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
