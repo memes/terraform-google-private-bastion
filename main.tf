@@ -32,7 +32,7 @@ data "google_compute_subnetwork" "subnet" {
 
 module "bastion" {
   source                     = "terraform-google-modules/bastion-host/google"
-  version                    = "5.2.0"
+  version                    = "5.3.0"
   service_account_name       = local.bastion_name
   name                       = local.bastion_name
   name_prefix                = local.bastion_name
