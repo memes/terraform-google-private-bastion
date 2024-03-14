@@ -1,20 +1,14 @@
 terraform {
-  required_version = ">= 0.14.5"
+  required_version = ">= 1.2"
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = ">= 4.8.0"
+      version = ">= 5.0"
     }
   }
 }
 
 locals {
-  bastion_name = format("%s-bastion", var.prefix)
-  labels = merge(var.labels, {
-    purpose = "iap-private-bastion"
-    source  = "github-com-memes-terraform-google-private-bastion"
-  })
-  tags = distinct(concat(var.tags, [local.bastion_name]))
   gcr_repos = can(regex("^(?:(?:us|eu|asia)\\.)?gcr\\.io", var.proxy_container_image)) ? { repo = {
     location   = can(regex("^(?:us|eu|asia)\\.gcr.io", var.proxy_container_image)) ? regex("^(us|eu|asia)\\.gcr.io", var.proxy_container_image)[0] : null
     project_id = regex("^(?:(?:us|eu|asia)\\.)?gcr\\.io/([^/]+)", var.proxy_container_image)[0]
@@ -30,24 +24,73 @@ data "google_compute_subnetwork" "subnet" {
   self_link = var.subnet
 }
 
-module "bastion" {
-  source                     = "terraform-google-modules/bastion-host/google"
-  version                    = "5.3.0"
-  service_account_name       = local.bastion_name
-  name                       = local.bastion_name
-  name_prefix                = local.bastion_name
-  fw_name_allow_ssh_from_iap = format("%s-allow-iap-bastion", var.prefix)
-  additional_ports           = concat([var.remote_port], var.additional_ports)
-  project                    = var.project_id
-  network                    = data.google_compute_subnetwork.subnet.network
-  subnet                     = data.google_compute_subnetwork.subnet.self_link
-  zone                       = var.zone
-  image_family               = var.image.family
-  image_project              = var.image.project_id
-  labels                     = local.labels
-  tags                       = local.tags
-  external_ip                = var.external_ip
+data "google_compute_image" "disk" {
+  project = var.image.project_id
+  family  = var.image.family
+}
+
+# Create the service account that will be used by the bastion
+resource "google_service_account" "bastion" {
+  project      = var.project_id
+  account_id   = var.name
+  display_name = "IAP bastion service account"
+}
+
+# Project roles to assign to the bastion service account
+resource "google_project_iam_member" "bastion" {
+  for_each = toset(concat([
+    "roles/logging.logWriter",
+    "roles/monitoring.metricWriter",
+    "roles/monitoring.viewer",
+    "roles/compute.osLogin",
+  ], var.additional_bastion_roles))
+  project = var.project_id
+  role    = each.key
+  member  = google_service_account.bastion.member
+}
+
+# Allow listed members access to bastion service account
+resource "google_service_account_iam_binding" "members" {
+  service_account_id = google_service_account.bastion.id
+  role               = "roles/iam.serviceAccountUser"
+  members            = var.members
+}
+
+# Launch an instance to be the bastion.
+resource "google_compute_instance" "bastion" {
+  project      = var.project_id
+  name         = var.name
+  machine_type = var.machine_type
+  zone         = var.zone
+  labels       = var.labels
+
+  service_account {
+    email = google_service_account.bastion.email
+    scopes = [
+      "cloud-platform",
+    ]
+  }
+
+  boot_disk {
+    initialize_params {
+      image  = data.google_compute_image.disk.self_link
+      size   = var.disk_size_gb
+      type   = "pd-standard"
+      labels = var.labels
+    }
+  }
+
+  tags = var.tags
+  network_interface {
+    subnetwork = data.google_compute_subnetwork.subnet.self_link
+    dynamic "access_config" {
+      for_each = var.external_ip ? [1] : []
+      content {}
+    }
+  }
+
   metadata = {
+    enable-oslogin = "TRUE"
     user-data = templatefile("${path.module}/templates/cloud-config.yaml", {
       docker_credential_registries = distinct(concat(
         [for repo in local.gcr_repos : repo.location != null ? format("%s.gcr.io", repo.location) : "gcr.io"],
@@ -57,10 +100,15 @@ module "bastion" {
       proxy_port            = var.remote_port
     })
   }
-  disk_size_gb                       = var.disk_size_gb
-  machine_type                       = var.machine_type
-  members                            = var.members
-  service_account_roles_supplemental = var.service_account_roles_supplemental
+}
+
+# Allow all member accounts to use IAP access to bastion instance.
+resource "google_iap_tunnel_instance_iam_binding" "members" {
+  project  = google_compute_instance.bastion.project
+  zone     = google_compute_instance.bastion.zone
+  instance = google_compute_instance.bastion.name
+  role     = "roles/iap.tunnelResourceAccessor"
+  members  = var.members
 }
 
 # Allow the bastion to access packages from container registry
@@ -68,24 +116,37 @@ resource "google_storage_bucket_iam_member" "bastion" {
   for_each = local.gcr_repos
   bucket   = format("%sartifacts.%s.appspot.com", coalesce(each.value.location, "unspecified") != "unspecified" ? format("%s.", each.value.location) : "", each.value.project_id)
   role     = "roles/storage.objectViewer"
-  member   = format("serviceAccount:%s", module.bastion.service_account)
-  depends_on = [
-    module.bastion,
-  ]
+  member   = google_service_account.bastion.member
 }
 
 # Allow the bastion to access packages from artifact registry
 resource "google_artifact_registry_repository_iam_member" "bastion" {
   for_each   = local.ar_repos
-  provider   = google-beta
   project    = each.value.project_id
   location   = each.value.location
   repository = each.value.repository
   role       = "roles/artifactregistry.reader"
-  member     = format("serviceAccount:%s", module.bastion.service_account)
-  depends_on = [
-    module.bastion,
+  member     = google_service_account.bastion.member
+}
+
+# Allow IAP access to the bastion instance.
+resource "google_compute_firewall" "iap" {
+  project     = var.project_id
+  name        = format("%s-allow-iap-bastion", var.name)
+  network     = data.google_compute_subnetwork.subnet.network
+  description = format("Allow IAP ingress to bastion instances (%s)", var.name)
+  direction   = "INGRESS"
+  priority    = 900
+  source_ranges = [
+    "35.235.240.0/20",
   ]
+  target_service_accounts = [
+    google_service_account.bastion.email,
+  ]
+  allow {
+    protocol = "tcp"
+    ports    = concat([22], [var.remote_port], var.additional_ports)
+  }
 }
 
 # Allow bastion instance to ping and connect to any port exposed on VMs executing
@@ -93,21 +154,18 @@ resource "google_artifact_registry_repository_iam_member" "bastion" {
 resource "google_compute_firewall" "bastion_service_accounts" {
   count       = length(flatten([for sa in coalescelist(var.bastion_targets.service_accounts, ["unspecified"]) : sa if sa != "unspecified"])) > 0 ? 1 : 0
   project     = var.project_id
-  name        = format("%s-allow-bastion-sa", var.prefix)
+  name        = format("%s-allow-bastion-sa", var.name)
   network     = data.google_compute_subnetwork.subnet.network
-  description = format("Allow bastion to reach specified target service accounts (%s)", var.prefix)
+  description = format("Allow bastion to reach specified target service accounts (%s)", var.name)
   direction   = "INGRESS"
   priority    = var.bastion_targets.priority
   source_service_accounts = [
-    module.bastion.service_account,
+    google_service_account.bastion.email,
   ]
   target_service_accounts = distinct(var.bastion_targets.service_accounts)
   allow {
     protocol = "all"
   }
-  depends_on = [
-    module.bastion,
-  ]
 }
 
 # Allow bastion instance to ping and connect to any port exposed on VMs executing
@@ -115,40 +173,16 @@ resource "google_compute_firewall" "bastion_service_accounts" {
 resource "google_compute_firewall" "bastion_cidrs" {
   count       = length(flatten([for cidr in coalescelist(var.bastion_targets.cidrs, ["unspecified"]) : cidr if cidr != "unspecified"])) > 0 ? 1 : 0
   project     = var.project_id
-  name        = format("%s-allow-bastion-cidrs", var.prefix)
+  name        = format("%s-allow-bastion-cidrs", var.name)
   network     = data.google_compute_subnetwork.subnet.network
-  description = format("Allow bastion to reach specified target CIDRs (%s)", var.prefix)
+  description = format("Allow bastion to reach specified target CIDRs (%s)", var.name)
   direction   = "INGRESS"
   priority    = var.bastion_targets.priority
   source_service_accounts = [
-    module.bastion.service_account,
+    google_service_account.bastion.email,
   ]
   destination_ranges = distinct(var.bastion_targets.cidrs)
   allow {
     protocol = "all"
   }
-  depends_on = [
-    module.bastion,
-  ]
-}
-
-# Allow bastion instance to ping and connect to any port exposed on VMs executing
-# with the specified network tags.
-resource "google_compute_firewall" "bastion_tags" {
-  count       = length(flatten([for tag in coalescelist(var.bastion_targets.tags, ["***"]) : tag if tag != "***"])) > 0 ? 1 : 0
-  project     = var.project_id
-  name        = format("%s-allow-bastion-tags", var.prefix)
-  network     = data.google_compute_subnetwork.subnet.network
-  description = format("Allow bastion to reach specified target tags (%s)", var.prefix)
-  direction   = "INGRESS"
-  source_tags = [
-    local.bastion_name,
-  ]
-  target_tags = distinct(var.bastion_targets.tags)
-  allow {
-    protocol = "all"
-  }
-  depends_on = [
-    module.bastion,
-  ]
 }

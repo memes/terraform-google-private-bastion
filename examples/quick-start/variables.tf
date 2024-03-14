@@ -1,18 +1,10 @@
 # Common variables
-variable "tf_service_account" {
-  type        = string
-  default     = null
-  description = <<-EOD
-An optional service account email that the Google provider will be configured to
-impersonate.
-EOD
-}
 
-variable "prefix" {
+variable "name" {
   type        = string
-  default     = "example-public-repo"
+  default     = "example-bastion"
   description = <<-EOD
-The prefix to use when naming resources managed by this module. Must be RFC1035
+The name to use when naming resources managed by this module. Must be RFC1035
 compliant and between 5 and 29 characters in length, inclusive.
 EOD
 }
@@ -43,8 +35,7 @@ variable "labels" {
   type        = map(string)
   default     = {}
   description = <<-EOD
-An optional map of labels to apply to resources created by this module, in addition
-to those always set. Default is empty.
+An optional map of labels to apply to resources created by this module. Default is empty.
 EOD
 }
 
@@ -52,8 +43,7 @@ variable "tags" {
   type        = list(string)
   default     = []
   description = <<-EOD
-An optional list of network tags to apply to resources created by this module,
-in addition to those always set. Default is empty.
+An optional list of network tags to apply to resources created by this module. Default is empty.
 EOD
 }
 
@@ -68,13 +58,11 @@ variable "bastion_targets" {
   type = object({
     service_accounts = list(string)
     cidrs            = list(string)
-    tags             = list(string)
     priority         = number
   })
   default = {
     service_accounts = null
     cidrs            = null
-    tags             = null
     priority         = null
   }
   description = <<-EOD
