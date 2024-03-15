@@ -1,6 +1,6 @@
 # Changelog
 
-<!-- markdownlint-disable MD024 -->
+<!-- markdownlint-disable MD004 MD012 MD024 -->
 
 All notable changes to this project will be documented in this file.
 

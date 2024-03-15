@@ -1,6 +1,7 @@
 ---
+version: ""
 fileignoreconfig:
 - filename: .github/workflows/release.yml
   checksum: f24e2cc79272f17b4732058956e6b8241cb4ae61655e75a1bd8ef8a04beabdde
 - filename: outputs.tf
-  checksum: 91e0de5c25e1488de0016463ad674cd80004b22ee0c0155ca66bf7f582acad27
+  checksum: cb8cd4b1c955888b5677c1c2d3ac312baeb8a9d4a773769fe21873bd21d40541
