@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.1](https://github.com/memes/terraform-google-private-bastion/compare/v3.0.0...v3.0.1) (2024-05-27)
+
+
+### Bug Fixes
+
+* Update tinyproxy for CVE mitigation ([a1e362b](https://github.com/memes/terraform-google-private-bastion/commit/a1e362b2e2f55014379c4019eac113d7ef601e2e)), closes [#533](https://github.com/memes/terraform-google-private-bastion/issues/533)
+
 ## [3.0.0](https://github.com/memes/terraform-google-private-bastion/compare/v2.3.5...v3.0.0) (2024-03-15)
 
 
