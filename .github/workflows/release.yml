@@ -58,7 +58,7 @@ jobs:
             org.opencontainers.image.description=Forward-proxy container for use in private bastion
             org.opencontainers.image.url=https://github.com/${{ github.repository }}/tree/${{ github.sha }}/containers/forward-proxy/
             org.opencontainers.image.documentation=https://github.com/${{ github.repository }}/tree/${{ github.sha }}/containers/forward-proxy/README.md
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         if: ${{ steps.release_please.outputs.release_created }}
         with:
           context: ./containers/forward-proxy
