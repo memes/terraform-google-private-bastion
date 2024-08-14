@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.1](https://github.com/memes/terraform-google-private-bastion/compare/v3.1.0...v3.1.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* Use the subnetwork project for FW rules ([eec1f69](https://github.com/memes/terraform-google-private-bastion/commit/eec1f69e847cb47c5a9666809692c6c754494e93))
+
 ## [3.1.0](https://github.com/memes/terraform-google-private-bastion/compare/v3.0.1...v3.1.0) (2024-08-14)
 
 
