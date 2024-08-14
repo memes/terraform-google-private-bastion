@@ -220,14 +220,15 @@ EOD
 
 variable "source_cidrs" {
   type     = list(string)
-  nullable = true
+  nullable = false
   validation {
-    condition     = var.source_cidrs == null ? true : alltrue([for cidr in var.source_cidrs : can(cidrhost(cidr, 0))])
+    condition     = alltrue([for cidr in var.source_cidrs : can(cidrhost(cidr, 0))])
     error_message = "Each source_cidrs value must be a valid IPv4 or IPv6 CIDR."
   }
-  default     = null
+  default     = []
   description = <<-EOD
-An optional list of CIDRs that will be permitted to access the bastion on ports 22 and `remote_port` (default 8888)
-when the `external_ip` flag is set to true.
+An optional list of CIDRs that will be permitted to access the bastion on ports 22, `remote_port` (default 8888), and
+any listed in `additional_ports` directly via public IP when the `external_ip` flag is set to true. Default is an empty
+list.
 EOD
 }

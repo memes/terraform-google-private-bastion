@@ -202,9 +202,6 @@ resource "google_compute_firewall" "access_bastion" {
   ]
   allow {
     protocol = "TCP"
-    ports = [
-      22,
-      var.remote_port,
-    ]
+    ports    = concat([22], [var.remote_port], var.additional_ports)
   }
 }
