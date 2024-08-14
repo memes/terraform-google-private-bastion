@@ -10,7 +10,7 @@ terraform {
 
 module "bastion" {
   source                = "memes/private-bastion/google"
-  version               = "3.1.0"
+  version               = "3.1.1"
   proxy_container_image = var.proxy_container_image
   name                  = var.name
   project_id            = var.project_id
