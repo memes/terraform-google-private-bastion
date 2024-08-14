@@ -95,7 +95,7 @@ For example, to pull from GitHub using a public IP address on the bastion:
 ```hcl
 module "bastion" {
     source                = "memes/private-bastion/google"
-    version               = "3.1.0"
+    version               = "3.1.1"
     ephemeral_ip          = true
     proxy_container_image = "ghcr.io/memes/terraform-google-private-bastion/forward-proxy:v3.1.0"
     source_cidrs = [
@@ -130,7 +130,7 @@ without requiring an external_ip.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bastion"></a> [bastion](#module\_bastion) | memes/private-bastion/google | 3.1.0 |
+| <a name="module_bastion"></a> [bastion](#module\_bastion) | memes/private-bastion/google | 3.1.1 |
 
 ## Resources
 
