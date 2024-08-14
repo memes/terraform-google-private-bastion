@@ -176,6 +176,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [google_artifact_registry_repository_iam_member.bastion](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/artifact_registry_repository_iam_member) | resource |
+| [google_compute_firewall.access_bastion](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
 | [google_compute_firewall.bastion_cidrs](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
 | [google_compute_firewall.bastion_service_accounts](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
 | [google_compute_firewall.iap](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
@@ -208,6 +209,7 @@ No modules.
 | <a name="input_machine_type"></a> [machine\_type](#input\_machine\_type) | The Compute Engine machine type to use for bastion. Default is 'e2-medium'. | `string` | `"e2-medium"` | no |
 | <a name="input_members"></a> [members](#input\_members) | An optional list of user/group/serviceAccount emails that will be added as IAP<br>members for _this_ bastion. Default is empty. | `list(string)` | `[]` | no |
 | <a name="input_remote_port"></a> [remote\_port](#input\_remote\_port) | The remote TCP port that the forward-proxy container will be listening on.<br>Default value is 8888. | `number` | `8888` | no |
+| <a name="input_source_cidrs"></a> [source\_cidrs](#input\_source\_cidrs) | An optional list of CIDRs that will be permitted to access the bastion on ports 22 and `remote_port` (default 8888)<br>when the `external_ip` flag is set to true. | `list(string)` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | An optional list of network tags to apply to resources created by this module. Default is empty. | `list(string)` | `[]` | no |
 
 ## Outputs
