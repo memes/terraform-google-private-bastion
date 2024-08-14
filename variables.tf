@@ -217,3 +217,18 @@ is the value to which HTTP/HTTPS proxies should use; e.g. HTTP_PROXY=http://loca
 where LOCAL_PORT is the value of `local_port` variable. Default value is 8888.
 EOD
 }
+
+variable "source_cidrs" {
+  type     = list(string)
+  nullable = false
+  validation {
+    condition     = alltrue([for cidr in var.source_cidrs : can(cidrhost(cidr, 0))])
+    error_message = "Each source_cidrs value must be a valid IPv4 or IPv6 CIDR."
+  }
+  default     = []
+  description = <<-EOD
+An optional list of CIDRs that will be permitted to access the bastion on ports 22, `remote_port` (default 8888), and
+any listed in `additional_ports` directly via public IP when the `external_ip` flag is set to true. Default is an empty
+list.
+EOD
+}

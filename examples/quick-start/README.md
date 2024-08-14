@@ -95,9 +95,12 @@ For example, to pull from GitHub using a public IP address on the bastion:
 ```hcl
 module "bastion" {
     source                = "memes/private-bastion/google"
-    version               = "1.0.0"
+    version               = "3.1.0"
     ephemeral_ip          = true
-    proxy_container_image = "ghcr.io/memes/terraform-google-private-bastion/forward-proxy:v3.0.0"
+    proxy_container_image = "ghcr.io/memes/terraform-google-private-bastion/forward-proxy:v3.1.0"
+    source_cidrs = [
+        "1.2.3.4/32",
+    ]
     # Other fields remain the same
     name                  = var.name
     project_id            = var.project_id
@@ -111,7 +114,8 @@ module "bastion" {
 
 Of course, if there is a NAT gateway on the VPC network, or other NAT egress
 solution such as BIG-IP, as long as the VPC routes have a default that directs
-external traffic through the NAT then a pull from Docker Hub or GHCR will work.
+external traffic through the NAT then a pull from Docker Hub or GHCR will work
+without requiring an external_ip.
 
 <!-- markdownlint-disable no-inline-html no-bare-urls -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -126,7 +130,7 @@ external traffic through the NAT then a pull from Docker Hub or GHCR will work.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bastion"></a> [bastion](#module\_bastion) | memes/private-bastion/google | 3.0.1 |
+| <a name="module_bastion"></a> [bastion](#module\_bastion) | memes/private-bastion/google | 3.1.0 |
 
 ## Resources
 

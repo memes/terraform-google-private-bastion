@@ -186,3 +186,22 @@ resource "google_compute_firewall" "bastion_cidrs" {
     protocol = "all"
   }
 }
+
+# Allow access to the bastion instance on ports 22 and remote_port from the set of source CIDRs.
+resource "google_compute_firewall" "access_bastion" {
+  for_each      = var.external_ip && try(length(var.source_cidrs), 0) > 0 ? { format("%s-allow-public-ingress", var.name) = distinct(var.source_cidrs) } : {}
+  project       = var.project_id
+  name          = each.key
+  network       = data.google_compute_subnetwork.subnet.network
+  description   = format("Allow external access to public bastion (%s)", var.name)
+  direction     = "INGRESS"
+  priority      = 1000
+  source_ranges = each.value
+  target_service_accounts = [
+    google_service_account.bastion.email,
+  ]
+  allow {
+    protocol = "TCP"
+    ports    = concat([22], [var.remote_port], var.additional_ports)
+  }
+}
