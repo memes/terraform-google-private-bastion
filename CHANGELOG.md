@@ -7,6 +7,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0](https://github.com/memes/terraform-google-private-bastion/compare/v3.0.1...v3.1.0) (2024-08-14)
+
+
+### Features
+
+* Add fw rule on external_ip and source_cidrs ([a9667ce](https://github.com/memes/terraform-google-private-bastion/commit/a9667cec998a7ab366d662fc3616d1a01f3b808a))
+
+
+### Bug Fixes
+
+* Include additional_ports in public firewall ([d359743](https://github.com/memes/terraform-google-private-bastion/commit/d35974345b25c19d719148b16b2f32f653c02a7e))
+* Update forward-proxy container ([26aa59a](https://github.com/memes/terraform-google-private-bastion/commit/26aa59a2304a7b761de51613b518a9f206f1609b))
+
 ## [3.0.1](https://github.com/memes/terraform-google-private-bastion/compare/v3.0.0...v3.0.1) (2024-05-27)
 
 
