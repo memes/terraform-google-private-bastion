@@ -131,7 +131,7 @@ resource "google_artifact_registry_repository_iam_member" "bastion" {
 
 # Allow IAP access to the bastion instance.
 resource "google_compute_firewall" "iap" {
-  project     = var.project_id
+  project     = data.google_compute_subnetwork.subnet.project
   name        = format("%s-allow-iap-bastion", var.name)
   network     = data.google_compute_subnetwork.subnet.network
   description = format("Allow IAP ingress to bastion instances (%s)", var.name)
@@ -153,7 +153,7 @@ resource "google_compute_firewall" "iap" {
 # as the specified service account(s).
 resource "google_compute_firewall" "bastion_service_accounts" {
   count       = length(flatten([for sa in coalescelist(var.bastion_targets.service_accounts, ["unspecified"]) : sa if sa != "unspecified"])) > 0 ? 1 : 0
-  project     = var.project_id
+  project     = data.google_compute_subnetwork.subnet.project
   name        = format("%s-allow-bastion-sa", var.name)
   network     = data.google_compute_subnetwork.subnet.network
   description = format("Allow bastion to reach specified target service accounts (%s)", var.name)
@@ -172,7 +172,7 @@ resource "google_compute_firewall" "bastion_service_accounts" {
 # in the specified CIDRs.
 resource "google_compute_firewall" "bastion_cidrs" {
   count       = length(flatten([for cidr in coalescelist(var.bastion_targets.cidrs, ["unspecified"]) : cidr if cidr != "unspecified"])) > 0 ? 1 : 0
-  project     = var.project_id
+  project     = data.google_compute_subnetwork.subnet.project
   name        = format("%s-allow-bastion-cidrs", var.name)
   network     = data.google_compute_subnetwork.subnet.network
   description = format("Allow bastion to reach specified target CIDRs (%s)", var.name)
@@ -190,7 +190,7 @@ resource "google_compute_firewall" "bastion_cidrs" {
 # Allow access to the bastion instance on ports 22 and remote_port from the set of source CIDRs.
 resource "google_compute_firewall" "access_bastion" {
   for_each      = var.external_ip && try(length(var.source_cidrs), 0) > 0 ? { format("%s-allow-public-ingress", var.name) = distinct(var.source_cidrs) } : {}
-  project       = var.project_id
+  project       = data.google_compute_subnetwork.subnet.project
   name          = each.key
   network       = data.google_compute_subnetwork.subnet.network
   description   = format("Allow external access to public bastion (%s)", var.name)
