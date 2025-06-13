@@ -7,6 +7,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0](https://github.com/memes/terraform-google-private-bastion/compare/v3.1.1...v4.0.0) (2025-06-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update to v6 of provider may break existing deployments
+
+### Bug Fixes
+
+* Update forward-proxy to Alpine 3.22.0 ([c1d46f1](https://github.com/memes/terraform-google-private-bastion/commit/c1d46f14bc9334fe73734ebb8b140f1fff968b2f))
+* Update module to use Google v6 provider ([a863eb3](https://github.com/memes/terraform-google-private-bastion/commit/a863eb3c9989f04a69aee207e408218010d6a3df))
+
 ## [3.1.1](https://github.com/memes/terraform-google-private-bastion/compare/v3.1.0...v3.1.1) (2024-08-14)
 
 
