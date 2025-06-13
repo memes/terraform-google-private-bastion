@@ -118,13 +118,13 @@ external traffic through the NAT then a pull from Docker Hub or GHCR will work
 without requiring an external_ip.
 
 <!-- markdownlint-disable no-inline-html no-bare-urls -->
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 5.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 6.9 |
 
 ## Modules
 
@@ -142,11 +142,11 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP project identifier where the bastion instance will be deployed. | `string` | n/a | yes |
 | <a name="input_proxy_container_image"></a> [proxy\_container\_image](#input\_proxy\_container\_image) | The qualified container image to use as a forward-proxy through this bastion. | `string` | n/a | yes |
-| <a name="input_subnet"></a> [subnet](#input\_subnet) | The fully-qualified subnetwork self-link to which the bastion instance will be<br>attached. | `string` | n/a | yes |
+| <a name="input_subnet"></a> [subnet](#input\_subnet) | The fully-qualified subnetwork self-link to which the bastion instance will be<br/>attached. | `string` | n/a | yes |
 | <a name="input_zone"></a> [zone](#input\_zone) | The compute zone where where the bastion instance will be deployed. | `string` | n/a | yes |
-| <a name="input_bastion_targets"></a> [bastion\_targets](#input\_bastion\_targets) | An optional set of firewall targets that will be used to create GCP Firewall Rules<br>that allow the targets to receive _ALL_ ingress traffic from the bastion instance.<br>Targets are specified as a list of service account emails, destination CIDRs, and<br>target network tags. If a priority is unspecified, the rules will be created at<br>the default priority (1000).<br><br>Leave this variable at the default empty value to manage firewall rules outside<br>this module. | <pre>object({<br>    service_accounts = list(string)<br>    cidrs            = list(string)<br>    priority         = number<br>  })</pre> | <pre>{<br>  "cidrs": null,<br>  "priority": null,<br>  "service_accounts": null<br>}</pre> | no |
+| <a name="input_bastion_targets"></a> [bastion\_targets](#input\_bastion\_targets) | An optional set of firewall targets that will be used to create GCP Firewall Rules<br/>that allow the targets to receive _ALL_ ingress traffic from the bastion instance.<br/>Targets are specified as a list of service account emails, destination CIDRs, and<br/>target network tags. If a priority is unspecified, the rules will be created at<br/>the default priority (1000).<br/><br/>Leave this variable at the default empty value to manage firewall rules outside<br/>this module. | <pre>object({<br/>    service_accounts = list(string)<br/>    cidrs            = list(string)<br/>    priority         = number<br/>  })</pre> | <pre>{<br/>  "cidrs": null,<br/>  "priority": null,<br/>  "service_accounts": null<br/>}</pre> | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | An optional map of labels to apply to resources created by this module. Default is empty. | `map(string)` | `{}` | no |
-| <a name="input_name"></a> [name](#input\_name) | The name to use when naming resources managed by this module. Must be RFC1035<br>compliant and between 5 and 29 characters in length, inclusive. | `string` | `"example-bastion"` | no |
+| <a name="input_name"></a> [name](#input\_name) | The name to use when naming resources managed by this module. Must be RFC1035<br/>compliant and between 5 and 29 characters in length, inclusive. | `string` | `"example-bastion"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | An optional list of network tags to apply to resources created by this module. Default is empty. | `list(string)` | `[]` | no |
 
 ## Outputs
@@ -156,6 +156,6 @@ No resources.
 | <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | The private IP address of the bastion instance. |
 | <a name="output_self_link"></a> [self\_link](#output\_self\_link) | The self-link of the bastion instance. |
 | <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | A gcloud command that will SSH via IAP to bastion host. |
-| <a name="output_tunnel_command"></a> [tunnel\_command](#output\_tunnel\_command) | A gcloud command that create a tunnel between localhost and bastion via IAP;<br>connections to localhost:PORT will be tunneled to bastion forward-proxy. The value<br>of PORT will be taken from `local_port` input variable, with 8888 as the default. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+| <a name="output_tunnel_command"></a> [tunnel\_command](#output\_tunnel\_command) | A gcloud command that create a tunnel between localhost and bastion via IAP;<br/>connections to localhost:PORT will be tunneled to bastion forward-proxy. The value<br/>of PORT will be taken from `local_port` input variable, with 8888 as the default. |
+<!-- END_TF_DOCS -->
 <!-- markdownlint-enable no-inline-html no-bare-urls -->
