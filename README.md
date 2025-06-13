@@ -164,8 +164,8 @@ as you have authenticated to the target repository.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 6.9 |
 
 ## Modules
 

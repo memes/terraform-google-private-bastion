@@ -5,3 +5,5 @@ fileignoreconfig:
   checksum: f24e2cc79272f17b4732058956e6b8241cb4ae61655e75a1bd8ef8a04beabdde
 - filename: outputs.tf
   checksum: cb8cd4b1c955888b5677c1c2d3ac312baeb8a9d4a773769fe21873bd21d40541
+- filename: variables.tf
+  checksum: 6b548d79ae5a27daba5b043b9336f0eaf112a9151085908e6cc04ddfeb3d0cfa

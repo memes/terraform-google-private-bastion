@@ -81,17 +81,26 @@ EOD
 }
 
 variable "labels" {
-  type        = map(string)
-  nullable    = false
+  type = map(string)
+  validation {
+    # GCP resource labels must be lowercase alphanumeric, underscore or hyphen,
+    # and the key must be <= 63 characters in length
+    condition     = length(compact([for k, v in var.labels : can(regex("^[a-z][a-z0-9_-]{0,62}$", k)) && can(regex("^[a-z0-9_-]{0,63}$", v)) ? "x" : ""])) == length(keys(var.labels))
+    error_message = "Each label key:value pair must match expectations."
+  }
   default     = {}
   description = <<-EOD
-An optional map of labels to apply to resources created by this module. Default is empty.
-EOD
+  An optional map of labels to apply to resources created by this module. Default is empty.
+  EOD
 }
 
 variable "tags" {
-  type        = list(string)
-  nullable    = false
+  type     = list(string)
+  nullable = false
+  validation {
+    condition     = alltrue([for tag in var.tags : can(regex("^[a-z][a-z0-9-]{0,62}$", tag))])
+    error_message = "Each tag entry has to be RFC1035 compliant."
+  }
   default     = []
   description = <<-EOD
 An optional list of network tags to apply to resources created by this module. Default is empty.
