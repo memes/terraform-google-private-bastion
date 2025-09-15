@@ -23,7 +23,7 @@ jobs:
         with:
           release-type: terraform-module
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         if: ${{ steps.release_please.outputs.release_created }}
       - name: Setup buildx
         uses: docker/setup-buildx-action@v3
