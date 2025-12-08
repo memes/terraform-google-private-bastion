@@ -1,6 +1,6 @@
 {
     "name": "memes-terraform-google-private-bastion",
-    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "image": "mcr.microsoft.com/devcontainers/base:bookworm",
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {},
         "ghcr.io/memes/devcontainers-features/direnv:1": {},
@@ -25,7 +25,7 @@
                 "Gruntfuggly.todo-tree",
                 "redhat.vscode-yaml",
                 "streetsidesoftware.code-spell-checker",
-                "gamunu.opentofu",
+                "opentofu.vscode-opentofu",
                 "esbenp.prettier-vscode",
                 "DavidAson.vscode-markdownlint",
                 "hashicorp.hcl"
@@ -42,6 +42,6 @@
     "containerUser": "vscode",
     "updateRemoteUserUID": true,
     "mounts": [
-        "source=${localEnv:HOME}/.config/gcloud,target=/home/vscode/.config/gcloud,type=bind"
+        "source=${localEnv:HOME}/.config/gcloud,target=/home/vscode/.config/gcloud,type=bind,consistency=cached"
     ]
 }
