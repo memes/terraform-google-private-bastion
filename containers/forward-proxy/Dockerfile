@@ -1,5 +1,5 @@
 # Run tinyproxy in forward only mode
-FROM alpine:3.23.2
+FROM alpine:3.23.3
 LABEL maintainer="Matthew Emes <memes@matthewemes.com>"
 
 RUN apk --no-cache add tinyproxy=1.11.2-r0 ca-certificates-bundle=20251003-r0
