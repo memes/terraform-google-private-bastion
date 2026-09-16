@@ -5,6 +5,7 @@ LABEL maintainer="Matthew Emes <memes@matthewemes.com>"
 RUN apk --no-cache add tinyproxy=1.11.3-r0 ca-certificates-bundle=20260611-r0
 EXPOSE 8888
 COPY tinyproxy.conf /etc/tinyproxy/tinyproxy.conf
-USER 65534 # nobody
+# Nobody
+USER 65534
 ENTRYPOINT ["/usr/bin/tinyproxy", "-d"]
 CMD []
